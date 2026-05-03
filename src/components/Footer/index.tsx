@@ -1,9 +1,9 @@
-import styles from './styles.module.css';
+import styles from "./styles.module.css";
 
 export function Footer() {
-  return (
-    <footer className={styles.footer}>
-      i am footer
-    </footer>
-  );
+    return(
+        <div className={styles.massa}>
+            <p >Eu sou o footer 1</p>
+        </div>
+    );
 }
