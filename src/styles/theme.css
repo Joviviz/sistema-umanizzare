@@ -35,5 +35,6 @@
   --disabled: #555f7d;
   --text-disabled: #aab3cc;
 
-  --bg-primary: linear-gradient(135deg, #7a1a45 0%, #9b2257 60%, #a82960 100%);
+  --bg-primary: #e8527a;
+  --bg-secondary: linear-gradient(135deg, #7a1a45 0%, #9b2257 60%, #a82960 100%);
 }
