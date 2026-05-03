@@ -1,9 +1,11 @@
 import styles from "./styles.module.css";
 
 export function Footer() {
-    return(
-        <div className={styles.massa}>
-            <p >Eu sou o footer 1</p>
-        </div>
+    const currentYear = new Date().getFullYear();
+
+    return (
+        <footer className={styles.footer}>
+            <p>&copy; {currentYear} Sistema Umanizzare - Todos os direitos reservados.</p>
+        </footer>
     );
 }

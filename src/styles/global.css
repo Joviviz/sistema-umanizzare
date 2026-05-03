@@ -14,6 +14,7 @@ body {
   font-size: 1.6rem;
   background: var(--gray-900);
   color: var(--text-default);
+  background-color: #D54779;
 }
 
 .form{
@@ -30,4 +31,23 @@ body {
   justify-content: center;
   flex-direction: column;
   gap: 2.4rem;
+}
+
+/* Isso é para página ocupar toda a altura da tela */
+html, body, #root {
+  height: 100%;
+  margin: 0;
+}
+
+/* criei uma div para envolver todo o conteúdo */
+.app-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* 100% da altura da visão (viewport) */
+}
+
+/* O conteúdo das páginas (Home, Login, etc) */
+.main-content {
+  flex: 1; /* Isso faz esse bloco "empurrar" o footer para o final */
+  background-color: #D54779; /* Cor de fundo que você está usando */
 }

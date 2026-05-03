@@ -16,6 +16,7 @@ import { Register } from './pages/Register'
 export function App() {
   return (
     <>
+    <div className="app-wrapper">
       <BrowserRouter>
         <Header/>
         <Routes>
@@ -25,6 +26,7 @@ export function App() {
         </Routes>
         <Footer/>
       </BrowserRouter>
+      </div>
     </>
   );
 }

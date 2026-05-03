@@ -1,3 +1,26 @@
-.massa{
-    color: aqua;
+.footer {
+    background-color: #953154 ;
+    color: #ffffff;
+    padding: 20px 0;
+    text-align: center;
+    width: 100%;
+    margin-top: auto;
+}
+
+.footer p {
+    margin: 0;
+    font-family: sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    opacity: 0.9;
+}
+/* No seu App.css ou index.css */
+#root {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex: 1; /* Isso empurra o footer para o rodapé */
 }
