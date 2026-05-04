@@ -8,17 +8,39 @@
     padding: 0 3.2rem;
 }
 
+/* LOGO*/
 .brand {
-    text-decoration: none;
-    color: var(--default-text);
+  display: flex;
+  align-items: center; 
+  text-decoration: none;
+  gap: 10px; 
+}
+
+.logoCircle {
+  width: 50px;
+  height: 50px;
+  background-color: #D54779; /* Cor rosa do fundo da logo */
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.logoImage {
+  width: 70%; 
+  height: auto;
+  object-fit: contain;
 }
 
 .brandName {
-    font-size: 2.8rem;
-    font-weight: 700;
-    
+  color: white;
+  font-family: 'Handlee', sans-serif; /* A fonte manuscrita que você viu na imagem */
+  font-size: 28px;
+  font-weight: 400;
 }
 
+/*BARRA DE NAVEGAÇAO*/
 .headerContent{
     margin: 0 auto;
     width: 100%;
@@ -44,3 +66,12 @@
     display: flex;
     align-items: center;
 }
+.navLink:hover {
+    color: var(--primary);
+}
+
+
+
+
+
+

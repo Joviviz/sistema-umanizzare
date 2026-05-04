@@ -22,18 +22,27 @@
   margin-bottom: 10px;
 }
 
-.smileyIcon {
-  background-color: #F37FA8;
-  color: white;
+.logoContainer {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+.logoCircle {
+  background-color: #D54779; 
   width: 80px;
   height: 80px;
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 40px;
-  font-weight: bold;
-  transform: rotate(90deg); /* Para o :) ficar de pé */
+  overflow: hidden;
+}
+
+.logoImage {
+  width: 70%; /* Para a logo não tocar nas bordas do círculo */
+  height: auto;
+  object-fit: contain;
 }
 
 .title {
@@ -54,7 +63,7 @@
   border-radius: 30px;
   border: none;
   font-size: 18px;
-  color: #666;
+  color: #47474766;
   outline: none;
 }
 

@@ -1,12 +1,15 @@
 import styles from './Register.module.css';
 import { Link } from 'react-router-dom';
+import logo from "../../assets/images/logo.png";
 
 export function Register() {
   return (
     <div className={styles.container}>
       <div className={styles.card}>
-        <div className={styles.iconContainer}>
-            <div className={styles.smileyIcon}>:)</div>
+        <div className={styles.logoContainer}>
+            <div className={styles.logoCircle}>
+                <img src={logo} alt="Logo Umanizzare" className={styles.logoImage} />
+            </div>
         </div>
 
         <h1 className={styles.title}>Cadastro</h1>
