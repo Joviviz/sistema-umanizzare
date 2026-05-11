@@ -67,7 +67,7 @@
     align-items: center;
 }
 .navLink:hover {
-    color: var(--primary);
+    color: #F37FA8; /* Cor rosa para o hover */
 }
 
 
