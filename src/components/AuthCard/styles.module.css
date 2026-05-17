@@ -1,7 +1,7 @@
 .card {
   background: var(--bg-secondary);
   border-radius: 2.4rem;
-  border: 2px solid rgba(232, 82, 122, 0.4);
+  border: 2px solid var(--border-outline);
   padding: 4rem 4rem 3.6rem;
   width: 100%;
   max-width: 44rem;

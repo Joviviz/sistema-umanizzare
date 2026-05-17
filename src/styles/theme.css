@@ -1,4 +1,7 @@
 :root {
+  --font-headings: 'Chillax', sans-serif;
+  --font-body: 'Nata Sans', sans-serif;
+
   --gray-100: #e6e9f0;
   --gray-200: #cdd3e1;
   --gray-300: #aab3cc;
@@ -35,6 +38,14 @@
   --disabled: #555f7d;
   --text-disabled: #aab3cc;
 
-  --bg-primary: #e8527a;
-  --bg-secondary: linear-gradient(135deg, #7a1a45 0%, #9b2257 60%, #a82960 100%);
+  /* --bg-primary: #e8527a; */
+  --bg-primary: #b92e57;
+  --bg-secondary:  #930535;
+  --border-outline: #c45832;
+  --color-orange: #ee9458;
+  --color-wine: #b92e57;
+  --color-blush: #fbded7;
+  --color-rust: #c45832;
+  --color-olive: #9f8845;
+
 }

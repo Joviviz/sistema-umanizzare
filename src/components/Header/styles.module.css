@@ -11,21 +11,21 @@
 
 .brand {
     text-decoration: none;
-    color: var(--default-text);
+    color: var(--text-default);
     display: flex;
     align-items: center;
     gap: 1.2rem;
 }
 
 .logoCircle {
-  width: 4.8rem;
-  height: 4.8rem;
-  background: var(--bg-primary);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
+    width: 4.8rem;
+    height: 4.8rem;
+    background: var(--bg-primary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
 }
 
 .logoImage {
@@ -61,7 +61,7 @@
 
 .navLink {
     text-decoration: none;
-    color: var(--default-text);
+    color: var(--text-default);
     display: flex;
     align-items: center;
 }
