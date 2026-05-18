@@ -6,3 +6,69 @@
   padding: 2rem;
 }
 
+.form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.inputGroup {
+  width: 100%;
+}
+
+.input {
+  width: 100%;
+  height: 5.2rem;
+  background: var(--gray-100);
+  border: 1px solid var(--border-outline);
+  border-radius: 0.8rem;
+  padding: 0 1.6rem;
+  color: var(--text-default);
+  font-family: var(--font-body);
+  font-size: 1.6rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  color: var(--text-over-primary);
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--primary-light);
+  box-shadow: 0 0 0 2px rgba(77, 231, 183, 0.2);
+}
+
+.errorMessage {
+  background: rgb(255, 0, 0, 0.5);
+  border: 1px solid var(--error);
+  padding: 1.2rem;
+  border-radius: 0.8rem;
+  font-size: 1.4rem;
+  text-align: center;
+}
+
+.forgot {
+  color: var(--text-over-primary-dark);
+  font-size: 1.4rem;
+  text-decoration: none;
+  align-self: flex-end;
+  transition: color 0.2s;
+}
+
+.forgot {
+  color: var(--text-over-primary-dark);
+  font-size: 1.4rem;
+  text-decoration: none;
+  align-items: flex-end;
+  transition: colro 0.2s;
+}
+
+.forgot:hover {
+  color: var(--text-over-primary-dark);
+  text-decoration: underline;
+}
+
+.button{
+  width: 100%;
+  height: 5.2rem;
+  background: var(--primary);
+}

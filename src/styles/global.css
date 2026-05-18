@@ -54,6 +54,19 @@ h1, h2, .title-display {
   font-size: 1.2rem;
 }
 
+.app-container{
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex: 1;
+  padding-top: 7rem;
+  display: flex;
+  flex-direction: column;
+}
+
 .form{
   display: flex;
   align-items: center;
