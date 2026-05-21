@@ -34,7 +34,7 @@ export function Header() {
           Sobre nos
         </a>
         <Link to="/login" className={styles.navLink}>
-          Configuração
+          Login
         </Link>
         <Link to="/register" className={styles.navLink}>
           Cadastro
