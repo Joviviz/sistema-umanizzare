@@ -1,67 +1,61 @@
-.header {
-    background: var(--bg-secondary);
-    display: flex;
-    align-items: center;
-    top: 0;
-    position: fixed;
-    width: 100%;
-    height: 7rem;
-    padding: 0 3.2rem;
+.sidebar {
+  width: 300px;
+  height: 100vh;
+  background-color: var(--bg-secondary);
+  display: flex;
+  flex-direction: column;
+  padding: 40px 0;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 1000;
 }
 
-.brand {
-    text-decoration: none;
-    color: var(--text-default);
-    display: flex;
-    align-items: center;
-    gap: 1.2rem;
-}
-
-.logoCircle {
-    width: 4.8rem;
-    height: 4.8rem;
-    background: var(--bg-primary);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
+.logoArea {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 50px;
+  text-align: center;
 }
 
 .logoImage {
-    width: 63%;
-    height: 63%;
-    object-fit: cover;
+  width: 75px;
+  height: auto;
+  margin-bottom: 12px;
 }
 
 .brandName {
-    font-size: 2.8rem;
-    font-weight: 700;
-
-}
-
-.headerContent {
-    margin: 0 auto;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  color: #ffffff;
+  font-family: 'chillax', sans-serif;
+  /* Use a mesma fonte do design */
+  font-weight: 300;
+  font-size: 1.8rem;
+  letter-spacing: 1px;
 }
 
 .nav {
-    display: flex;
-    align-items: center;
-}
-
-.navList {
-    list-style: none;
-    display: flex;
-    gap: 3.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
 }
 
 .navLink {
-    text-decoration: none;
-    color: var(--text-default);
-    display: flex;
-    align-items: center;
+  color: #ffffff;
+  font-family: 'chillax', sans-serif;
+  font-size: 1.25rem;
+  text-decoration: none;
+  padding: 14px 40px;
+  width: 90%;
+  /* Deixa um espaço na ponta direita para o arredondamento aparecer */
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+  background-color: transparent;
+  transition: all 0.25s ease-in-out;
+}
+
+.navLink:hover {
+  background-color: #b52244;
+  padding-left: 45px;
 }

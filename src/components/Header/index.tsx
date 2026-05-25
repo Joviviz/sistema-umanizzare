@@ -1,59 +1,43 @@
 import styles from "./styles.module.css";
-import { Link } from "react-router-dom";
-
+import { Link, useLocation } from "react-router-dom";
 import logo from "../../assets/images/brand.png";
 
 export function Header() {
+  const location = useLocation();
+
+  // Função auxiliar para verificar qual aba está ativa na URL
+  const isActive = (path: string) => location.pathname === path ? styles.active : "";
+
   return (
-    <header className={styles.header}>
-      <div className={styles.headerContent}>
-        <a href="#" className={styles.brand}>
-          <div className={styles.logoCircle}>
-            <img src={logo} alt="Umanizzare" className={styles.logoImage} />
-          </div>
-          <span className={styles.brandName}>Umanizzare</span>
+    <aside className={styles.sidebar}>
+      {/* Área da Logo no topo da barra lateral */}
+      <div className={styles.logoArea}>
+        <img src={logo} alt="Umanizzare" className={styles.logoImage} />
+        <h1 className={styles.brandName}>Umanizzare</h1>
+      </div>
+
+      {/* Menu de Navegação Vertical */}
+      <nav className={styles.nav}>
+        <Link to="/" className={`${styles.navLink} ${isActive("/")}`}>
+          inicio
+        </Link>
+        <a href="#pacientes" className={styles.navLink}>
+          pacientes
+        </a>
+        <a href="#documentos" className={styles.navLink}>
+          Documentos
+        </a>
+        <a href="#consultas" className={styles.navLink}>
+          relatórios
         </a>
 
-        <nav className={styles.nav}>
-          <ul className={styles.navList}>
-            <li>
-              <Link to="/" className={styles.navLink}>
-                Início
-              </Link>
-            </li>
-            <li>
-              <a href="#pacientes" className={styles.navLink}>
-                Pacientes
-              </a>
-            </li>
-            <li>
-              <a href="#documentos" className={styles.navLink}>
-                Documentos
-              </a>
-            </li>
-            <li>
-              <a href="#consultas" className={styles.navLink}>
-                Consultas
-              </a>
-            </li>
-            <li>
-              <a href="#sobre" className={styles.navLink}>
-                Sobre nós
-              </a>
-            </li>
-            <li>
-              <Link to="/login" className={styles.navLink}>
-                Login
-              </Link>
-            </li>
-            <li>
-              <Link to="/register" className={styles.navLink}>
-                Cadastro
-              </Link>
-            </li>
-          </ul>
-        </nav>
-      </div>
-    </header>
+        <Link to="/login" className={styles.navLink}>
+          Login
+        </Link>
+        <Link to="/register" className={styles.navLink}>
+          Cadastro
+        </Link>
+      </nav>
+    </aside>
   );
 }
