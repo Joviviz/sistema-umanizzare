@@ -2,22 +2,22 @@ import { Link, useNavigate } from "react-router-dom";
 import { AuthCard } from "../../components/AuthCard";
 import styles from "./styles.module.css";
 import { useState } from "react";
+import { apiService } from "../../services/api";
 
 export function Register() {
-  // gerenciar etapas de formulario (1 = conta, 2 = questionario)
   const [step, setStep] = useState(1);
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  // registro 1
+  // registro etapa 1
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [confirmEmail, setConfirmEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  // const [role, setRole] = useState("USER");
+  // const [role, setRole] = useState("USER"); // Removido do swagger
 
-  // registro 2
+  // registro etapa 2
   const [dataAcolhimento, setDataAcolhimento] = useState("");
   const [horario, setHorario] = useState("");
   const [equipeAtendimento, setEquipeAtendimento] = useState("");
@@ -29,22 +29,15 @@ export function Register() {
   const [estadoCivil, setEstadoCivil] = useState("");
   const [genero, setGenero] = useState("");
   const [orientacaoSexual, setOrientacaoSexual] = useState("");
-  const [identificacaoEtnicoRacial, setIdentificacaoEtnicoRacial] =
-    useState("");
+  const [identificacaoEtnicoRacial, setIdentificacaoEtnicoRacial] = useState("");
   const [grauEscolaridade, setGrauEscolaridade] = useState("");
   const [funcaoAtual, setFuncaoAtual] = useState("");
   const [interesseOficinas, setInteresseOficinas] = useState("");
 
   function handleNextStep() {
     setError("");
-    if (
-      !email ||
-      !name ||
-      !confirmEmail ||
-      !password ||
-      !confirmPassword ||
-      !role
-    ) {
+    // removi !role
+    if (!email || !name || !confirmEmail || !password || !confirmPassword) {
       setError("Todos os campos são obrigatórios");
       return;
     }
@@ -67,64 +60,45 @@ export function Register() {
     setError("");
 
     if (!dataAcolhimento || !horario || !cpf || !idade || !telefone) {
-      setError(
-        "Por favor, preencha os dados principais do acolhimento (Data, Horário, CPF, Idade e Telefone).",
-      );
+      setError("Por favor, preencha os dados principais do acolhimento (Data, Horário, CPF, Idade e Telefone).");
       return;
     }
 
     try {
-      const response = await fetch("http://147.93.9.44:8002/auth/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          data_do_Acolhimento: dataAcolhimento,
-          horario: horario,
-          equipe_de_atendimento: equipeAtendimento,
-          nome: name, // tem dois name e nome eu coloquei name para os dois
-          cpf: cpf,
-          idade: Number(idade),
-          telefone: telefone,
-          endereco: endereco,
-          orgao_responsavel_pelo_encaminhamento: orgaoEncaminhamento,
-          estado_civil: estadoCivil,
-          genero: genero,
-          orientacao_sexual: orientacaoSexual,
-          identificacao_etnico_racial: identificacaoEtnicoRacial,
-          grau_de_escolaridade: grauEscolaridade,
-          funcao_atual: funcaoAtual,
-          tem_interesse_em_participar_das_oficinas_do_instituto:
-            interesseOficinas,
-          name: name,
-          email: email,
-          password: password,
-        }),
+      // Chama a função direto da sua apiService passando todo o pratão exigido pelo backend
+      await apiService.register({
+        data_do_Acolhimento: dataAcolhimento,
+        horario: horario,
+        equipe_de_atendimento: equipeAtendimento,
+        nome: name, // tem dois nomes
+        cpf: cpf,
+        idade: Number(idade),
+        telefone: telefone,
+        endereco: endereco,
+        orgao_responsavel_pelo_encaminhamento: orgaoEncaminhamento,
+        estado_civil: estadoCivil,
+        genero: genero,
+        orientacao_sexual: orientacaoSexual,
+        identificacao_etnico_racial: identificacaoEtnicoRacial,
+        grau_de_escolaridade: grauEscolaridade,
+        funcao_atual: funcaoAtual,
+        tem_interesse_em_participar_das_oficinas_do_instituto: interesseOficinas,
+        name: name, // tem dois nomes
+        email: email,
+        password: password,
       });
 
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.message || "Erro ao realizar o cadastro");
-      }
-
-      console.log("Cadastro mestre realizado com sucesso!", data);
+      console.log("Cadastro completo enviado com sucesso!");
       alert("Cadastro e ficha de acolhimento criados com sucesso!");
-
       navigate("/login");
     } catch (err) {
-      if (err instanceof Error) {
-        setError(err.message);
-      } else {
-        setError("Não foi possível conectar ao servidor.");
-      }
+      setError(err instanceof Error ? err.message : "Não foi possível conectar ao servidor.");
     }
   }
 
   return (
     <main className={styles.page}>
-      <AuthCard title={step == 1 ? "Cadastro" : "Ficha de Acolhimento"}>
+      <AuthCard title={step === 1 ? "Cadastro" : "Ficha de Acolhimento"}>
         <form onSubmit={handleRegister} className={styles.form}>
           {error && <span className={styles.errorMessage}>{error}</span>}
 
@@ -302,19 +276,13 @@ export function Register() {
                 value={interesseOficinas}
                 onChange={(e) => setInteresseOficinas(e.target.value)}
               >
-                <option value="">
-                  Tem interesse nas oficinas do instituto?
-                </option>
+                <option value="">Tem interesse nas oficinas do instituto?</option>
                 <option value="Sim">Sim, tenho interesse</option>
                 <option value="Não">Não possuo interesse</option>
               </select>
 
               <div className={styles.buttonGroup}>
-                <button
-                  type="button"
-                  onClick={() => setStep(1)}
-                  className={styles.backButton}
-                >
+                <button type="button" onClick={() => setStep(1)} className={styles.backButton}>
                   Voltar
                 </button>
                 <button type="submit" className={styles.button}>
@@ -323,15 +291,6 @@ export function Register() {
               </div>
             </div>
           )}
-
-          {/* <select
-            className={styles.input}
-            value={role}
-            onChange={(e) => setRole(e.target.value)}
-          >
-            <option value="USER">Paciente USER</option>
-            <option value="ADM">Administrador ADM</option>
-          </select> */}
 
           <p className={styles.footerText}>
             Já tem uma conta? <Link to="/login">Faça Login</Link>
