@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthCard } from "../../components/AuthCard";
 import styles from "./styles.module.css";
+import { apiService } from "../../services/api"; 
 
 export function Login() {
   const [email, setEmail] = useState("");
@@ -20,22 +21,7 @@ export function Login() {
     }
 
     try {
-      const response = await fetch("http://147.93.9.44:8002/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: email,
-          password: password,
-        }),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.message || "E-mail ou senha incorretos.");
-      }
+      const data = await apiService.login({ email, password });
 
       if (data.token) {
         localStorage.setItem("@Umanizzare:token", data.token);
@@ -44,11 +30,7 @@ export function Login() {
       console.log("Login feito com sucesso!", data);
       navigate("/");
     } catch (err) {
-      if (err instanceof Error) {
-        setError(err.message);
-      } else {
-        setError("Não foi possível conectar ao servidor.")
-      }
+      setError(err instanceof Error ? err.message : "Não foi possível conectar ao servidor.");
     }
   }
 
