@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthCard } from "../../components/AuthCard";
 import styles from "./styles.module.css";
-import { apiService } from "../../services/api"; 
+import { apiService } from "../../services/api";
 
 export function Login() {
   const [email, setEmail] = useState("");
@@ -23,14 +23,32 @@ export function Login() {
     try {
       const data = await apiService.login({ email, password });
 
-      if (data.token) {
-        localStorage.setItem("@Umanizzare:token", data.token);
+      const token = data.accessToken || data.token;
+      if (token) {
+        localStorage.setItem("@Umanizzare:token", token);
+      }
+
+      const role = data.role || data.user?.role
+      if (role) {
+        localStorage.setItem("@Umanizzare:role", role);
+      }
+
+      const name = data.name || data.nome || data.user?.name || data.user?.nome;
+      if (name) {
+        localStorage.setItem("@Umanizzare:name", name);
       }
 
       console.log("Login feito com sucesso!", data);
+
       navigate("/");
+      window.location.reload();
+      
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Não foi possível conectar ao servidor.");
+      setError(
+        err instanceof Error
+          ? err.message
+          : "Não foi possível conectar ao servidor.",
+      );
     }
   }
 

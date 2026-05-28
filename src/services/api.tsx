@@ -61,7 +61,7 @@ export const apiService = {
   },
 
   // ALTERAR ROLE
-  async updateUserRole(id: string, role: "USER" | "ADM") {
+  async updateUserRole(id: string, role: "USER" | "ADMIN") {
     const response = await fetch(`${BASE_URL}/users/${id}`, {
       method: "PATCH",
       headers: getHeaders(true),
@@ -78,13 +78,12 @@ export const apiService = {
   // DELETAR USUARIO
   async deleteUser(id: string) {
     const response = await fetch(`${BASE_URL}/users/${id}`, {
-      method: "PATCH",
-      headers: getHeaders(true),
-      body: JSON.stringify({ role }),
+      method: "DELETE",
+      headers: getHeaders(false),
     });
     if (!response.ok) {
       const data = await response.json();
-      throw new Error(data.message || "Erro ao atualizar permissão.");
+      throw new Error(data.message || "Erro ao deletar usuário.");
     }
     return true;
   },
