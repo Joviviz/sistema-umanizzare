@@ -1,15 +1,14 @@
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import styles from "./styles.module.css";
-import { Link, useNavigate } from "react-router-dom";
-
 import logo from "../../assets/images/brand.png";
 
 export function Header() {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const token = localStorage.getItem("@Umanizzare:token");
   const userName = localStorage.getItem("@Umanizzare:name") || "Usuário";
   const userLoggedRole = localStorage.getItem("@Umanizzare:role") || "USER";
-
 
   const isAdm = userLoggedRole === "ADMIN";
   const isAuthenticated = !!token;
@@ -23,89 +22,66 @@ export function Header() {
     window.location.reload();
   }
 
+  const isActive = (path: string) => (location.pathname === path ? styles.active : "");
+
   return (
-    <header className={styles.header}>
-      <div className={styles.headerContent}>
-        <Link to="/" className={styles.brand}>
-          <div className={styles.logoCircle}>
-            <img src={logo} alt="Umanizzare" className={styles.logoImage} />
-          </div>
-          <span className={styles.brandName}>Umanizzare</span>
+    <aside className={styles.sidebar}>
+      <div className={styles.logoArea}>
+        <img src={logo} alt="Umanizzare" className={styles.logoImage} />
+        <h1 className={styles.brandName}>Umanizzare</h1>
+      </div>
+
+      <nav className={styles.nav}>
+        <Link to="/" className={`${styles.navLink} ${isActive("/")}`}>
+          Início
         </Link>
 
-        <nav className={styles.nav}>
-          <ul className={styles.navList}>
-            <li>
-              <Link to="/" className={styles.navLink}>
-                Início
-              </Link>
-            </li>
+        {isAdm && (
+          <Link
+            to="/admin/users"
+            className={`${styles.navLink} ${isActive("/admin/users")}`}
+          >
+            Painel Admin
+          </Link>
+        )}
 
-            {isAdm && (
-              <li>
-                <Link
-                  to="/admin/users"
-                  className={`${styles.navLink} ${styles.adminLink}`}
-                >
-                  PAINEL ADMIN
-                </Link>
-              </li>
-            )}
+        <a href="#pacientes" className={styles.navLink}>
+          Pacientes
+        </a>
+        <a href="#documentos" className={styles.navLink}>
+          Documentos
+        </a>
+        <a href="#consultas" className={styles.navLink}>
+          Relatórios
+        </a>
 
-            <li>
-              <Link to="/" className={styles.navLink}>
-                Pacientes
-              </Link>
-            </li>
-
-            <li>
-              <Link to="/" className={styles.navLink}>
-                Documentos
-              </Link>
-            </li>
-            <li>
-              <Link to="/" className={styles.navLink}>
-                Consultas
-              </Link>
-            </li>
-            <li>
-              <Link to="/" className={styles.navLink}>
-                Sobre nós
-              </Link>
-            </li>
-
-            {isAuthenticated ? (
-              <>
-                <li className={styles.userInfo}>
-                  <span className={styles.userName}>Olá, {userName}</span>
-                </li>
-                <li>
-                  <button 
-                    onClick={handleLogout} 
-                    className={`${styles.navLink} ${styles.logoutButton}`}
-                    style={{ background: "none", border: "none", cursor: "pointer" }}
-                  >
-                    Sair
-                  </button>
-                </li>
-              </>
-            ) : (
-              <>
-                <li>
-                  <Link to="/login" className={styles.navLink}>
-                    Login
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/register" className={styles.navLink}>
-                    Cadastro
-                  </Link>
-                </li>
-              </>
-            )}
-          </ul>
-        </nav>
-      </div>
-    </header>
+        {isAuthenticated ? (
+          <>
+            <span 
+              className={styles.navLink} 
+              style={{ cursor: "default", opacity: 0.8, fontSize: "1rem" }}
+            >
+              Olá, {userName}
+            </span>
+            <button
+              onClick={handleLogout}
+              className={styles.navLink}
+              style={{ border: "none", textAlign: "left", cursor: "pointer" }}
+            >
+              Sair
+            </button>
+          </>
+        ) : (
+          <>
+            <Link to="/login" className={`${styles.navLink} ${isActive("/login")}`}>
+              Login
+            </Link>
+            <Link to="/register" className={`${styles.navLink} ${isActive("/register")}`}>
+              Cadastro
+            </Link>
+          </>
+        )}
+      </nav>
+    </aside>
   );
 }
