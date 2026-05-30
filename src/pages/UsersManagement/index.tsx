@@ -14,10 +14,12 @@ export function UsersManagement() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const usersPerPage = 5;
+
   const userLoggedRole = localStorage.getItem("@Umanizzare:role") || "USER";
   const isAdm = userLoggedRole === "ADMIN";
 
-  // PADRÃO RECOMENDADO PELA DOCUMENTAÇÃO DO REACT
   useEffect(() => {
     let isMounted = true;
 
@@ -25,9 +27,10 @@ export function UsersManagement() {
       try {
         const data = await apiService.getUsers();
         
-        // Só atualiza o estado se o componente ainda estiver montado na tela
+        console.log("Dados recebidos da API (Users):", data);
+
         if (isMounted) {
-          setUsers(data);
+          setUsers(Array.isArray(data) ? data : data.users || []);
         }
       } catch (err) {
         if (isMounted) {
@@ -42,11 +45,10 @@ export function UsersManagement() {
 
     loadUsers();
 
-    // Função de limpeza (cleanup): roda se o componente desmontar
     return () => {
       isMounted = false;
     };
-  }, []); // Mantém o array de dependências vazio para rodar só na montagem
+  }, []);
 
   async function handleToggleRole(id: string, currentRole: "USER" | "ADMIN") {
     if (!isAdm) return;
@@ -54,6 +56,7 @@ export function UsersManagement() {
 
     try {
       await apiService.updateUserRole(id, newRole);
+
       setUsers((prevUsers) =>
         prevUsers.map((user) => (user.id === id ? { ...user, role: newRole } : user))
       );
@@ -70,17 +73,31 @@ export function UsersManagement() {
     try {
       await apiService.deleteUser(id);
       setUsers((prevUsers) => prevUsers.filter((user) => user.id !== id));
+
+      if (currentUsers.length === 1 && currentPage > 1) {
+        setCurrentPage(currentPage - 1);
+      }
+
       alert("Usuário deletado com sucesso!");
     } catch (err) {
       alert(err instanceof Error ? err.message : "Erro ao deletar usuário.");
     }
   }
 
+  const indexOfLastUser = currentPage * usersPerPage;
+  const indexOfFirstUser = indexOfLastUser - usersPerPage;
+
+  const currentUsers = users.slice(indexOfFirstUser, indexOfLastUser);
+
+  const totalPages = Math.ceil(users.length / usersPerPage);
+
+  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
+
   if (loading) {
     return <div className={styles.loading}>Carregando usuários...</div>;
   }
 
-  return (
+return (
     <div className={styles.container}>
       <h1 className={styles.title}>Gerenciamento de Usuários</h1>
       {error && <p className={styles.errorMessage}>{error}</p>}
@@ -95,7 +112,7 @@ export function UsersManagement() {
           </tr>
         </thead>
         <tbody>
-          {users.map((user) => (
+          {currentUsers.map((user) => (
             <tr key={user.id}>
               <td>{user.name}</td>
               <td>{user.email}</td>
@@ -127,6 +144,30 @@ export function UsersManagement() {
           ))}
         </tbody>
       </table>
+
+      {totalPages > 1 && (
+        <div className={styles.pagination}>
+          <button 
+            onClick={() => paginate(currentPage - 1)} 
+            disabled={currentPage === 1}
+            className={styles.pageButton}
+          >
+            Anterior
+          </button>
+          
+          <span className={styles.pageInfo}>
+            Página {currentPage} de {totalPages}
+          </span>
+
+          <button 
+            onClick={() => paginate(currentPage + 1)} 
+            disabled={currentPage === totalPages}
+            className={styles.pageButton}
+          >
+            Próxima
+          </button>
+        </div>
+      )}
     </div>
   );
 }

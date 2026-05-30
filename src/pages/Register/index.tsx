@@ -55,24 +55,51 @@ export function Register() {
     setStep(2);
   }
 
+  const handleCpfChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let value = e.target.value;
+
+    value = value.replace(/\D/g, "");
+
+    if (value.length > 11) {
+      value = value.slice(0, 11);
+    }
+
+    value = value.replace(/(\d{3})(\d)/, "$1.$2");
+    value = value.replace(/(\d{3})(\d)/, "$1.$2");
+    value = value.replace(/(\d{3})(\d{1,2})$/, "$1-$2");
+
+    setCpf(value);
+  }
+
   async function handleRegister(e: React.SyntheticEvent<HTMLFormElement>) {
     e.preventDefault();
     setError("");
 
     if (!dataAcolhimento || !horario || !cpf || !idade || !telefone) {
-      setError("Por favor, preencha os dados principais do acolhimento (Data, Horário, CPF, Idade e Telefone).");
+      setError("Por favor, preencha os dados principais do acolhimento .");
+      return;
+    }
+
+    const ageNumber = Number(idade);
+    if (ageNumber < 0 || ageNumber > 150) {
+      setError("Por favor, coloque uma idade válida.");
+      return;
+    }
+
+    const cleanCpf = cpf.replace(/\D/g, "");
+    if (cleanCpf.length !== 11) {
+      setError("O CPF deve conter 11 dígitos.");
       return;
     }
 
     try {
-      // Chama a função direto da sua apiService passando todo o pratão exigido pelo backend
       await apiService.register({
         data_do_Acolhimento: dataAcolhimento,
         horario: horario,
         equipe_de_atendimento: equipeAtendimento,
         nome: name, // tem dois nomes
-        cpf: cpf,
-        idade: Number(idade),
+        cpf: cleanCpf,
+        idade: ageNumber,
         telefone: telefone,
         endereco: endereco,
         orgao_responsavel_pelo_encaminhamento: orgaoEncaminhamento,
@@ -89,8 +116,10 @@ export function Register() {
       });
 
       console.log("Cadastro completo enviado com sucesso!");
+
       alert("Cadastro e ficha de acolhimento criados com sucesso!");
       navigate("/login");
+
     } catch (err) {
       setError(err instanceof Error ? err.message : "Não foi possível conectar ao servidor.");
     }
@@ -187,7 +216,8 @@ export function Register() {
                   type="text"
                   placeholder="CPF"
                   value={cpf}
-                  onChange={(e) => setCpf(e.target.value)}
+                  onChange={handleCpfChange}
+                  maxLength={14}
                 />
                 <input
                   className={styles.input}
@@ -195,6 +225,8 @@ export function Register() {
                   placeholder="Idade"
                   value={idade}
                   onChange={(e) => setIdade(e.target.value)}
+                  min="0"
+                  max="150"
                 />
               </div>
 
