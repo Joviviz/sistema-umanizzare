@@ -32,15 +32,15 @@
   --text-over-error: #e6e9f0;
   --text-over-info: #0a0f1a;
 
-  --text-default: #e6e9f0;
+  --text-default: #800020;
   --text-muted: #aab3cc;
 
   --disabled: #555f7d;
   --text-disabled: #aab3cc;
 
-  /* --bg-primary: #e8527a; */
-  --bg-primary: #b92e57;
-  --bg-secondary:  #930535;
+  /* --bg-primary: #f3eee8; */
+  --bg-primary: #f3eee8;
+  --bg-secondary:  #800020;
   --border-outline: #c45832;
   --color-orange: #ee9458;
   --color-wine: #b92e57;

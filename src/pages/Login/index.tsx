@@ -1,92 +1,63 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { AuthCard } from "../../components/AuthCard";
-import styles from "./styles.module.css";
-import { apiService } from "../../services/api";
+import styles from './styles.module.css';
+import { Link } from 'react-router-dom';
+import logo from "../../assets/images/brand.png";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 export function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-
-  const navigate = useNavigate();
-
-  async function handleSubmit(e: React.SyntheticEvent<HTMLFormElement>) {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setError("");
-
-    if (!email || !password) {
-      setError("Por favor, preencha todos os campos.");
-      return;
-    }
-
-    try {
-      const data = await apiService.login({ email, password });
-
-      const token = data.accessToken || data.token;
-      if (token) {
-        localStorage.setItem("@Umanizzare:token", token);
-      }
-
-      const role = data.role || data.user?.role
-      if (role) {
-        localStorage.setItem("@Umanizzare:role", role);
-      }
-
-      const name = data.name || data.nome || data.user?.name || data.user?.nome;
-      if (name) {
-        localStorage.setItem("@Umanizzare:name", name);
-      }
-
-      console.log("Login feito com sucesso!", data);
-
-      navigate("/");
-      window.location.reload();
-      
-    } catch (err) {
-      setError(
-        err instanceof Error
-          ? err.message
-          : "Não foi possível conectar ao servidor.",
-      );
-    }
-  }
+  };
+  
 
   return (
-    <main className={styles.page}>
-      <AuthCard title="Login">
-        <form onSubmit={handleSubmit} className={styles.form}>
-          {error && <span className={styles.errorMessage}>{error}</span>}
+   
+    <div className={`container-fluid p-0 ${styles.container}`}>
+      <div className="row g-0 h-100 w-100">
+        
+       
+        <div className={`col-12 col-lg-5 ${styles.sidebar}`}>
+          <div className={styles.logoArea}>
+             <img src={logo} alt="Logo Umanizzare" className="img-fluid" /> 
+             <h1>Umanizzare</h1>
+             <h3>INSTITUTO</h3>
+          </div>
+          <h2 className="d-none d-lg-block">Login</h2> {}
+        </div>
+        <div className={`col-12 col-lg-7 ${styles.formSection}`}>
+        
+          <div className={`w-100 px-3 ${styles.loginCardWrapper}`}>
+            <div className={styles.loginCard}>
+              <div className={styles.header}>
+                <h3>Bem vindo de volta</h3>
+                <p>Entre para acessar a plataforma</p>
+              </div>
 
-          <input
-            className={styles.input}
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
+              <form onSubmit={handleSubmit}>
+                <div className={styles.inputGroup}>
+                  <label>E-mail</label>
+                  <input type="email" placeholder="Digite seu e-mail" className="form-control" required />
+                </div>
 
-          <input
-            className={styles.input}
-            type="password"
-            placeholder="Senha"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
+                <div className={styles.inputGroup}>
+                  <label>Senha</label>
+                  <input type="password" placeholder="Digite sua senha" className="form-control" required />
+                </div>
 
-          <Link to="/forgot-password" className={styles.forgot}>
-            Esqueceu a senha?
-          </Link>
+                <a href="#" className={styles.forgotPassword}>esqueceu a senha?</a>
 
-          <button type="submit" className={styles.button}>
-            Entrar
-          </button>
+                <button type="submit" className={styles.btnEntrar}>
+                  Entrar
+                </button>
+              </form>
 
-          <p className={styles.footerText}>
-            Novo por aqui? <Link to="/register">Cadastre-se</Link>
-          </p>
-        </form>
-      </AuthCard>
-    </main>
+              <p className={styles.footerLink}>
+                Novo por aqui? <Link to="/register">Cadastre-se</Link>
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
   );
 }

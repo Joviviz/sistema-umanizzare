@@ -1,5 +1,5 @@
 .footer {
-  background: var(--bg-secondary);
+  background: var(--bg-primary);
   height: 6rem;
   display: flex;
   align-items: center;
@@ -14,5 +14,5 @@
 
 .footer p {
   font-size: 1.4rem;
-  opacity: 0.6;
+  opacity: 1.6;
 }
